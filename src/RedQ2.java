@@ -1,3 +1,5 @@
+import java.lang.*;
+
 public class RedQ2 {
     /**
      * Returns which has a higher average value: a given linked list or a given tree.
@@ -28,6 +30,51 @@ public class RedQ2 {
      * @return "list" if the list has a bigger average, "tree" if the tree has a bigger average
      */
     public static String biggerAverage(ListNode head, TreeNode root) {
-        return null;
+        double listAverage = listAvg(head);
+        int tCount = treeCount(root);
+        int tSum = treeSum(root);
+        double treeAverage = (double) tSum/tCount;
+
+        if (treeAverage > listAverage) {
+            return "tree";
+        } else {
+            return "list";
+        }
     }
+    //get the avg of a list
+    public static double listAvg(ListNode head) {
+        int total = 0;
+        int length = 0;
+        while (head != null) {
+            length++;
+            total += head.data;
+            head = head.next;
+        }
+        double avg = (double) total / length;
+        return avg;
+    }
+
+    public static int treeCount(TreeNode root) {
+        int count = 0;
+        if (root == null) {
+            return 0;
+        }
+        count++;
+        count += treeCount(root.left);
+        count += treeCount(root.right);
+        return count;
+    }
+    
+    public static int treeSum(TreeNode root) {
+        int sum = 0;
+        if (root == null) {
+            return 0;
+        }
+        sum += root.data;
+        sum += treeSum(root.left);
+        sum += treeSum(root.right);
+        return sum;
+    }
+
+
 }
